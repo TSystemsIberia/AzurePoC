@@ -3,29 +3,57 @@
 }
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <h1>Azure TSE Multi-IoT Plattform</h1>
+    <p class="lead">This PoC application will collect information from some IoT devices and persists it into an Azure Database. It has been implemented as a sample to be used in the following UCs:</p>
+    <p><a href="https://www.microsoft.com/en-US/server-cloud/internet-of-things/azure-iot-suite.aspx" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
+        <h2>UC 1</h2>
         <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+            In UC1, only developed software code is transitioned from stage to stage.  The underlying Microsoft Azure objects remain unchanged.
+            The required objects for the target stage already exist or are created when required.
+            A practical application of this use case:
         </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <ol>
+            <li>Development environment with various Azure objects.</li>
+            <li>Agile development methodology with the Scrum implementation.</li>
+            <li>Sprint cycle is 4 weeks and code moves from Development to Test, and eventually to Production during this cycle.</li>
+            <li>Continuous Integration approach.</li>
+        </ol>
+        <p>Third party tools such as Atlassian JIRA (task/project management), GitHub Enterprise (source code versioning) and Jenkins (for Continuous Integration) are utilised.  These tools can be deployed via dedicated virtual machines or using a Software as a Service model.</p>
+        <p><a class="btn btn-default" href="">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
+        <h2>UC 2</h2>
+        <p>
+            In UC2, the Azure objects will be logically transitioned to the target stage.
+            For example, a SQL database server will be moved from the DEV to TEST environment. There will be some limitations as not all objects can be moved between subscriptions and/or resource groups. The key issues that need to be considered per object:
+        <ol>
+            <li>The tools used to move objects.</li>
+            <li>Whether the object is moved between an account, subscription or resource group.</li>
+            <li>Whether the object will be renamed and what are the limitations.</li>
+            <li>The configuration tasks required to bring the object to a functional state in the target stage. (e.g. user permissions or network addressing)</li>
+            <li>Other factors that relate to how, which & when objects are transitioned.</li>
+        </ol>
+            A practical application of this use case: A SQL server consisting of PRE-PROD databases are to be moved to the PROD environment.   This may involve: 1) renaming the server, 2) renaming the data-bases, 3) network address changes, 4) metadata changes, and 5) disaster recov-ery configuration changes.
+    </p>
+    <p><a class="btn btn-default" href="">Learn more &raquo;</a></p>
+</div>
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <h2>UC 3</h2>
+        <p>In UC3, the Azure object is not transitioned, but instead a new object is created in the tar-get state by using templates and JSON scripts
+The Azure Resource Manager Template, Microsoft Visual Studio and Lab Management capabilities allow resources to be created from templates and pre-defined scripts.   These capabilities include:
+            <ol>
+                <li>Virtual environment setup and teardown.</li> 
+                <li>Ability to create reliable and repeatable environments on a timely basis.</li> 
+                <li>Test and build automation.</li> 
+                <li>Ability to checkpoint environments and to return to previous states.</li> 
+                <li>Template creation and management.</li> 
+            </ol>
+           Once the new object is verified and any data copied across, the object in the original stage maybe re-purposed, put in an offline state or decommissioned.  The tools for this use case will be discussed in detail in the Private Relay section of this document.
+        </p>
+        <p><a class="btn btn-default" href="">Learn more &raquo;</a></p>
     </div>
 </div>

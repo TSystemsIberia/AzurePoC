@@ -12,13 +12,13 @@ namespace IoTPoC.Data.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class CallButtonLogParams
+    public partial class LogParams
     {
         public long Id { get; set; }
         public string Param { get; set; }
         public string Value { get; set; }
-        public long CallButtonLogId { get; set; }
+        public long FK_LogId { get; set; }
     
-        public virtual CallButtonLog CallButtonLog { get; set; }
+        public virtual ActivityLog ActivityLog { get; set; }
     }
 }

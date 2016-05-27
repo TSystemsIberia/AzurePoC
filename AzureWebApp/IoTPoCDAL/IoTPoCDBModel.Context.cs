@@ -25,8 +25,8 @@ namespace IoTPoC.Data.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<CallButtonLog> CallButtonLogSet { get; set; }
-        public virtual DbSet<CallButtonLogParams> CallButtonLogParamsSet { get; set; }
-        public virtual DbSet<CallButtonDevice> CallButtonDeviceSet { get; set; }
+        public virtual DbSet<ActivityLog> ActivityLogSet { get; set; }
+        public virtual DbSet<LogParams> LogParamsSet { get; set; }
+        public virtual DbSet<Device> DeviceSet { get; set; }
     }
 }

@@ -8,10 +8,10 @@ using IoTPoC.Data.Model;
 
 namespace AzureWebApp.Controllers
 {
-    public class CallButtonController : Controller
+    public class APIController : Controller
     {
-        // GET: CallButton
-        public ActionResult CBEndPoint()
+        // GET: NotifiyInfo
+        public ActionResult NotifyInfo()
         {
             // track request
             logRequest();
@@ -32,20 +32,20 @@ namespace AzureWebApp.Controllers
         private void logRequest()
         {
             // track request
-            var logInfo = new CallButtonLog();
+            var logInfo = new ActivityLog();
             logInfo.LogTime = DateTime.Now;
             logInfo.LogRequest = Request.Url.ToString();
-            logInfo.Ip = Request.UserHostAddress;
+            logInfo.SourceIP = Request.UserHostAddress;
 
             var cbName = Request.QueryString["cbname"];
             var callButton = findOrCreateCallButtonDevice(cbName);
             if (callButton.Id != 0)
             {
-                logInfo.CallButtonDeviceId = callButton.Id;
+                logInfo.FK_DeviceId = callButton.Id;
             }
             else
             {
-                logInfo.CallButtonDevice = callButton;
+                logInfo.Device = callButton;
             }
 
             // process params
@@ -56,11 +56,11 @@ namespace AzureWebApp.Controllers
 
                 for (int i = 0; i < logParms; i++)
                 {
-                    var logParam = new CallButtonLogParams();
+                    var logParam = new LogParams();
 
                     logParam.Param = Request.QueryString.GetKey(i);
                     logParam.Value = Request.QueryString.Get(i);
-                    logInfo.CallButtonLogParams.Add(logParam);
+                    logInfo.LogParams.Add(logParam);
                 }
             }
 
@@ -68,14 +68,14 @@ namespace AzureWebApp.Controllers
             persistLogInfo(logInfo);
         }
 
-        private void persistLogInfo(CallButtonLog logInfo)
+        private void persistLogInfo(ActivityLog logInfo)
         {
             // persists into db
             using (IoTPoCDBEntities dbIoTPoC = new IoTPoCDBEntities())
             {
                 try
                 {
-                    dbIoTPoC.CallButtonLogSet.Add(logInfo);
+                    dbIoTPoC.ActivityLogSet.Add(logInfo);
                     dbIoTPoC.SaveChanges();
                 }
                 catch (DbEntityValidationException dbEx)
@@ -89,27 +89,29 @@ namespace AzureWebApp.Controllers
                                                     validationError.ErrorMessage);
                         }
                     }
+                    throw dbEx;
                 }
             }
         }
 
-        private CallButtonDevice findOrCreateCallButtonDevice(string cbName)
+        private Device findOrCreateCallButtonDevice(string cbName)
         {
-            CallButtonDevice device = null;
+            Device device = null;
 
             // persists into db
             using (IoTPoCDBEntities dbIoTPoC = new IoTPoCDBEntities())
             {
-                device = (from devices in dbIoTPoC.CallButtonDeviceSet
+                device = (from devices in dbIoTPoC.DeviceSet
                     where devices.Name == cbName
                     select devices).FirstOrDefault();
                 }
 
             if (device == null)
             {
-                device = new CallButtonDevice();
+                device = new Device();
                 device.Name = cbName;
                 device.MAC = "NOTREGISTRED";
+                device.Type = "UNKNOWN";
             }
 
             return device;

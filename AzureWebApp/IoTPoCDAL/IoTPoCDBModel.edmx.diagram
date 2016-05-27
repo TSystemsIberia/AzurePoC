@@ -5,11 +5,11 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="359c9912feab4bbface4cc0f482c3acc" Name="Diagram1" >
-        <EntityTypeShape EntityType="IoTPoCDBModel.CallButtonLog" Width="2" PointX="2.25" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="IoTPoCDBModel.CallButtonLogParams" Width="2.125" PointX="2" PointY="4.375" />
-        <EntityTypeShape EntityType="IoTPoCDBModel.CallButtonDevice" Width="2" PointX="5.5" PointY="0.75" />
-        <AssociationConnector Association="IoTPoCDBModel.CallButtonLogCallButtonLogParams" />
-        <AssociationConnector Association="IoTPoCDBModel.CallButtonDeviceCallButtonLog" />
+        <EntityTypeShape EntityType="IoTPoCDBModel.ActivityLog" Width="2" PointX="2.125" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="IoTPoCDBModel.LogParams" Width="2.125" PointX="2" PointY="4.375" />
+        <EntityTypeShape EntityType="IoTPoCDBModel.Device" Width="2" PointX="5.5" PointY="1.5" />
+        <AssociationConnector Association="IoTPoCDBModel.ActivityLogLogParams" />
+        <AssociationConnector Association="IoTPoCDBModel.DeviceActivityLog" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

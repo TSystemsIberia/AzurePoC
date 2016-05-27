@@ -12,22 +12,22 @@ namespace IoTPoC.Data.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class CallButtonLog
+    public partial class ActivityLog
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CallButtonLog()
+        public ActivityLog()
         {
-            this.CallButtonLogParams = new HashSet<CallButtonLogParams>();
+            this.LogParams = new HashSet<LogParams>();
         }
     
         public long Id { get; set; }
         public System.DateTime LogTime { get; set; }
         public string LogRequest { get; set; }
-        public string Ip { get; set; }
-        public long CallButtonDeviceId { get; set; }
+        public string SourceIP { get; set; }
+        public long FK_DeviceId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CallButtonLogParams> CallButtonLogParams { get; set; }
-        public virtual CallButtonDevice CallButtonDevice { get; set; }
+        public virtual ICollection<LogParams> LogParams { get; set; }
+        public virtual Device Device { get; set; }
     }
 }

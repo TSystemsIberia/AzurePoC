@@ -6,66 +6,72 @@
     <edmx:StorageModels>
     <Schema Namespace="IoTPoCDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="IoTPoCDBModelStoreContainer">
-    <EntitySet Name="CallButtonLogSet" EntityType="IoTPoCDBModel.Store.CallButtonLogSet" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="CallButtonLogParamsSet" EntityType="IoTPoCDBModel.Store.CallButtonLogParamsSet" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="CallButtonDeviceSet" EntityType="IoTPoCDBModel.Store.CallButtonDeviceSet" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="CallButtonLogCallButtonLogParams" Association="IoTPoCDBModel.Store.CallButtonLogCallButtonLogParams">
-      <End Role="CallButtonLog" EntitySet="CallButtonLogSet" />
-      <End Role="CallButtonLogParams" EntitySet="CallButtonLogParamsSet" />
+    <EntitySet Name="ActivityLogSet" EntityType="IoTPoCDBModel.Store.ActivityLogSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LogParamsSet" EntityType="IoTPoCDBModel.Store.LogParamsSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DeviceSet" EntityType="IoTPoCDBModel.Store.DeviceSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ActivityLogLogParams" Association="IoTPoCDBModel.Store.ActivityLogLogParams">
+      <End Role="ActivityLog" EntitySet="ActivityLogSet" />
+      <End Role="LogParams" EntitySet="LogParamsSet" />
     </AssociationSet>
-    <AssociationSet Name="CallButtonDeviceCallButtonLog" Association="IoTPoCDBModel.Store.CallButtonDeviceCallButtonLog">
-      <End Role="CallButtonDevice" EntitySet="CallButtonDeviceSet" />
-      <End Role="CallButtonLog" EntitySet="CallButtonLogSet" />
+    <AssociationSet Name="DeviceActivityLog" Association="IoTPoCDBModel.Store.DeviceActivityLog">
+      <End Role="Device" EntitySet="DeviceSet" />
+      <End Role="ActivityLog" EntitySet="ActivityLogSet" />
     </AssociationSet>
   </EntityContainer>
-  <EntityType Name="CallButtonLogSet">
+  <EntityType Name="ActivityLogSet">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="LogTime" Type="datetime" Nullable="false" />
     <Property Name="LogRequest" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Ip" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CallButtonDeviceId" Type="bigint" Nullable="false" />
+    <Property Name="SourceIP" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FK_DeviceId" Type="bigint" Nullable="false" />
   </EntityType>
-  <EntityType Name="CallButtonLogParamsSet">
+  <EntityType Name="LogParamsSet">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Param" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CallButtonLogId" Type="bigint" Nullable="false" />
+    <Property Name="FK_LogId" Type="bigint" Nullable="false" />
   </EntityType>
-  <EntityType Name="CallButtonDeviceSet">
+  <EntityType Name="DeviceSet">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="MAC" Type="nchar" Nullable="false" MaxLength="12" />
+    <Property Name="Type" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
   </EntityType>
-  <Association Name="CallButtonLogCallButtonLogParams">
-    <End Role="CallButtonLog" Type="IoTPoCDBModel.Store.CallButtonLogSet" Multiplicity="1" />
-    <End Role="CallButtonLogParams" Type="IoTPoCDBModel.Store.CallButtonLogParamsSet" Multiplicity="*" />
+  <Association Name="ActivityLogLogParams">
+    <End Role="ActivityLog" Type="IoTPoCDBModel.Store.ActivityLogSet" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LogParams" Type="IoTPoCDBModel.Store.LogParamsSet" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="CallButtonLog">
+      <Principal Role="ActivityLog">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="CallButtonLogParams">
-        <PropertyRef Name="CallButtonLogId" />
+      <Dependent Role="LogParams">
+        <PropertyRef Name="FK_LogId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="CallButtonDeviceCallButtonLog">
-    <End Role="CallButtonDevice" Type="IoTPoCDBModel.Store.CallButtonDeviceSet" Multiplicity="1" />
-    <End Role="CallButtonLog" Type="IoTPoCDBModel.Store.CallButtonLogSet" Multiplicity="*" />
+  <Association Name="DeviceActivityLog">
+    <End Role="Device" Type="IoTPoCDBModel.Store.DeviceSet" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ActivityLog" Type="IoTPoCDBModel.Store.ActivityLogSet" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="CallButtonDevice">
+      <Principal Role="Device">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="CallButtonLog">
-        <PropertyRef Name="CallButtonDeviceId" />
+      <Dependent Role="ActivityLog">
+        <PropertyRef Name="FK_DeviceId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -74,70 +80,77 @@
     <edmx:ConceptualModels>
       <Schema Namespace="IoTPoCDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="IoTPoCDBEntities" annotation:LazyLoadingEnabled="true" >
-          <EntitySet Name="CallButtonLogSet" EntityType="IoTPoCDBModel.CallButtonLog" />
-          <EntitySet Name="CallButtonLogParamsSet" EntityType="IoTPoCDBModel.CallButtonLogParams" />
-          <EntitySet Name="CallButtonDeviceSet" EntityType="IoTPoCDBModel.CallButtonDevice" />
-          <AssociationSet Name="CallButtonLogCallButtonLogParams" Association="IoTPoCDBModel.CallButtonLogCallButtonLogParams">
-            <End Role="CallButtonLog" EntitySet="CallButtonLogSet" />
-            <End Role="CallButtonLogParams" EntitySet="CallButtonLogParamsSet" />
+          <EntitySet Name="ActivityLogSet" EntityType="IoTPoCDBModel.ActivityLog" />
+          <EntitySet Name="LogParamsSet" EntityType="IoTPoCDBModel.LogParams" />
+          <EntitySet Name="DeviceSet" EntityType="IoTPoCDBModel.Device" />
+          <AssociationSet Name="ActivityLogLogParams" Association="IoTPoCDBModel.ActivityLogLogParams">
+            <End Role="ActivityLog" EntitySet="ActivityLogSet" />
+            <End Role="LogParams" EntitySet="LogParamsSet" />
           </AssociationSet>
-          <AssociationSet Name="CallButtonDeviceCallButtonLog" Association="IoTPoCDBModel.CallButtonDeviceCallButtonLog">
-            <End Role="CallButtonDevice" EntitySet="CallButtonDeviceSet" />
-            <End Role="CallButtonLog" EntitySet="CallButtonLogSet" />
+          <AssociationSet Name="DeviceActivityLog" Association="IoTPoCDBModel.DeviceActivityLog">
+            <End Role="Device" EntitySet="DeviceSet" />
+            <End Role="ActivityLog" EntitySet="ActivityLogSet" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="CallButtonLog">
+        <EntityType Name="ActivityLog">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LogTime" Type="DateTime" Nullable="false" />
           <Property Name="LogRequest" Type="String" Nullable="false" />
-          <Property Name="Ip" Type="String" Nullable="false" />
-          <NavigationProperty Name="CallButtonLogParams" Relationship="IoTPoCDBModel.CallButtonLogCallButtonLogParams" FromRole="CallButtonLog" ToRole="CallButtonLogParams" />
-          <NavigationProperty Name="CallButtonDevice" Relationship="IoTPoCDBModel.CallButtonDeviceCallButtonLog" FromRole="CallButtonLog" ToRole="CallButtonDevice" />
-          <Property Name="CallButtonDeviceId" Type="Int64" Nullable="false" />
+          <Property Name="SourceIP" Type="String" Nullable="false" />
+          <NavigationProperty Name="LogParams" Relationship="IoTPoCDBModel.ActivityLogLogParams" FromRole="ActivityLog" ToRole="LogParams" />
+          <NavigationProperty Name="Device" Relationship="IoTPoCDBModel.DeviceActivityLog" FromRole="ActivityLog" ToRole="Device" />
+          <Property Name="FK_DeviceId" Type="Int64" Nullable="false" />
         </EntityType>
-        <EntityType Name="CallButtonLogParams">
+        <EntityType Name="LogParams">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Param" Type="String" Nullable="false" />
           <Property Name="Value" Type="String" Nullable="false" />
-          <NavigationProperty Name="CallButtonLog" Relationship="IoTPoCDBModel.CallButtonLogCallButtonLogParams" FromRole="CallButtonLogParams" ToRole="CallButtonLog" />
-          <Property Name="CallButtonLogId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="ActivityLog" Relationship="IoTPoCDBModel.ActivityLogLogParams" FromRole="LogParams" ToRole="ActivityLog" />
+          <Property Name="FK_LogId" Type="Int64" Nullable="false" />
         </EntityType>
-        <EntityType Name="CallButtonDevice">
+        <EntityType Name="Device">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" />
           <Property Name="MAC" Type="String" Nullable="false" FixedLength="true" MaxLength="12" />
-          <NavigationProperty Name="CallButtonLog" Relationship="IoTPoCDBModel.CallButtonDeviceCallButtonLog" FromRole="CallButtonDevice" ToRole="CallButtonLog" />
+          <NavigationProperty Name="Log" Relationship="IoTPoCDBModel.DeviceActivityLog" FromRole="Device" ToRole="ActivityLog" />
+          <Property Name="Type" Type="String" Nullable="true" />
+          <Property Name="Description" Type="String" Nullable="true" />
         </EntityType>
-        <Association Name="CallButtonLogCallButtonLogParams">
-          <End Type="IoTPoCDBModel.CallButtonLog" Role="CallButtonLog" Multiplicity="1" />
-          <End Type="IoTPoCDBModel.CallButtonLogParams" Role="CallButtonLogParams" Multiplicity="*" />
+        <Association Name="ActivityLogLogParams">
+          <End Type="IoTPoCDBModel.ActivityLog" Role="ActivityLog" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="IoTPoCDBModel.LogParams" Role="LogParams" Multiplicity="*" >
+          </End>
           <ReferentialConstraint>
-            <Principal Role="CallButtonLog">
+            <Principal Role="ActivityLog">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="CallButtonLogParams">
-              <PropertyRef Name="CallButtonLogId" />
+            <Dependent Role="LogParams">
+              <PropertyRef Name="FK_LogId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="CallButtonDeviceCallButtonLog">
-          <End Type="IoTPoCDBModel.CallButtonDevice" Role="CallButtonDevice" Multiplicity="1" />
-          <End Type="IoTPoCDBModel.CallButtonLog" Role="CallButtonLog" Multiplicity="*" />
+        <Association Name="DeviceActivityLog">
+          <End Type="IoTPoCDBModel.Device" Role="Device" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="IoTPoCDBModel.ActivityLog" Role="ActivityLog" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CallButtonDevice">
+            <Principal Role="Device">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="CallButtonLog">
-              <PropertyRef Name="CallButtonDeviceId" />
+            <Dependent Role="ActivityLog">
+              <PropertyRef Name="FK_DeviceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -147,33 +160,35 @@
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="IoTPoCDBModelStoreContainer" CdmEntityContainer="IoTPoCDBEntities">
-    <EntitySetMapping Name="CallButtonLogSet">
-      <EntityTypeMapping TypeName="IsTypeOf(IoTPoCDBModel.CallButtonLog)">
-        <MappingFragment StoreEntitySet="CallButtonLogSet">
+    <EntitySetMapping Name="ActivityLogSet">
+      <EntityTypeMapping TypeName="IsTypeOf(IoTPoCDBModel.ActivityLog)">
+        <MappingFragment StoreEntitySet="ActivityLogSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="LogTime" ColumnName="LogTime" />
           <ScalarProperty Name="LogRequest" ColumnName="LogRequest" />
-          <ScalarProperty Name="Ip" ColumnName="Ip" />
-          <ScalarProperty Name="CallButtonDeviceId" ColumnName="CallButtonDeviceId" />
+          <ScalarProperty Name="SourceIP" ColumnName="SourceIP" />
+          <ScalarProperty Name="FK_DeviceId" ColumnName="FK_DeviceId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="CallButtonLogParamsSet">
-      <EntityTypeMapping TypeName="IsTypeOf(IoTPoCDBModel.CallButtonLogParams)">
-        <MappingFragment StoreEntitySet="CallButtonLogParamsSet">
+    <EntitySetMapping Name="LogParamsSet">
+      <EntityTypeMapping TypeName="IsTypeOf(IoTPoCDBModel.LogParams)">
+        <MappingFragment StoreEntitySet="LogParamsSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Param" ColumnName="Param" />
           <ScalarProperty Name="Value" ColumnName="Value" />
-          <ScalarProperty Name="CallButtonLogId" ColumnName="CallButtonLogId" />
+          <ScalarProperty Name="FK_LogId" ColumnName="FK_LogId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="CallButtonDeviceSet">
-      <EntityTypeMapping TypeName="IsTypeOf(IoTPoCDBModel.CallButtonDevice)">
-        <MappingFragment StoreEntitySet="CallButtonDeviceSet">
+    <EntitySetMapping Name="DeviceSet">
+      <EntityTypeMapping TypeName="IsTypeOf(IoTPoCDBModel.Device)">
+        <MappingFragment StoreEntitySet="DeviceSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="MAC" ColumnName="MAC" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

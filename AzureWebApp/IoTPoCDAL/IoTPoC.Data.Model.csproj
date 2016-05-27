@@ -50,13 +50,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CallButtonDevice.cs">
+    <Compile Include="ActivityLog.cs">
       <DependentUpon>IoTPoCDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="CallButtonLog.cs">
-      <DependentUpon>IoTPoCDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CallButtonLogParams.cs">
+    <Compile Include="Device.cs">
       <DependentUpon>IoTPoCDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="IoTPoCDBModel.Context.cs">
@@ -73,6 +70,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IoTPoCDBModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="LogParams.cs">
+      <DependentUpon>IoTPoCDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

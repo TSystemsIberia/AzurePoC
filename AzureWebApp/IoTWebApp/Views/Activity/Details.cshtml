@@ -1,0 +1,51 @@
+﻿@model IoTPoC.Data.Model.ActivityLog
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ActivityLog</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LogTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LogTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LogRequest)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LogRequest)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SourceIP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SourceIP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Device.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Device.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

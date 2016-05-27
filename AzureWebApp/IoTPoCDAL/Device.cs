@@ -12,19 +12,21 @@ namespace IoTPoC.Data.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class CallButtonDevice
+    public partial class Device
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CallButtonDevice()
+        public Device()
         {
-            this.CallButtonLog = new HashSet<CallButtonLog>();
+            this.Log = new HashSet<ActivityLog>();
         }
     
         public long Id { get; set; }
         public string Name { get; set; }
         public string MAC { get; set; }
+        public string Type { get; set; }
+        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CallButtonLog> CallButtonLog { get; set; }
+        public virtual ICollection<ActivityLog> Log { get; set; }
     }
 }

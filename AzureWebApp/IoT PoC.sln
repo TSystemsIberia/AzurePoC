@@ -1,0 +1,39 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTWebApp", "IoTWebApp\IoTWebApp.csproj", "{38F1EEC3-E5E6-4C5A-A771-366FE8B1F572}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9AB27B68-141F-4E0E-8901-E35CFDF5B767} = {9AB27B68-141F-4E0E-8901-E35CFDF5B767}
+	EndProjectSection
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "IoTPoC.Database", "IoTPoCDb\IoTPoC.Database.sqlproj", "{023D9DD4-10B0-4472-96EE-A93C694C4CAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTPoC.Data.Model", "IoTPoCDAL\IoTPoC.Data.Model.csproj", "{9AB27B68-141F-4E0E-8901-E35CFDF5B767}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38F1EEC3-E5E6-4C5A-A771-366FE8B1F572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38F1EEC3-E5E6-4C5A-A771-366FE8B1F572}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38F1EEC3-E5E6-4C5A-A771-366FE8B1F572}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38F1EEC3-E5E6-4C5A-A771-366FE8B1F572}.Release|Any CPU.Build.0 = Release|Any CPU
+		{023D9DD4-10B0-4472-96EE-A93C694C4CAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{023D9DD4-10B0-4472-96EE-A93C694C4CAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{023D9DD4-10B0-4472-96EE-A93C694C4CAF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{023D9DD4-10B0-4472-96EE-A93C694C4CAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{023D9DD4-10B0-4472-96EE-A93C694C4CAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{023D9DD4-10B0-4472-96EE-A93C694C4CAF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{9AB27B68-141F-4E0E-8901-E35CFDF5B767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AB27B68-141F-4E0E-8901-E35CFDF5B767}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AB27B68-141F-4E0E-8901-E35CFDF5B767}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AB27B68-141F-4E0E-8901-E35CFDF5B767}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

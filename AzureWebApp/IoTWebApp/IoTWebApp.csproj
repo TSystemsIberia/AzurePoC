@@ -22,7 +22,7 @@
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
     <UseGlobalApplicationHostFile />
-    <ApplicationInsightsResourceId>/subscriptions/ecf83f73-8c18-491c-8f96-290921469f80/resourcegroups/IOT_POC_DEV/providers/microsoft.insights/components/iot-poc-dev-wa01</ApplicationInsightsResourceId>
+    <ApplicationInsightsResourceId>/subscriptions/8d0283ff-edd1-48ee-af8d-e698db430408/resourcegroups/DEVAPCEUWRGP001/providers/microsoft.insights/components/IoTWebApp</ApplicationInsightsResourceId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
